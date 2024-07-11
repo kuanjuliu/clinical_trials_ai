@@ -18,7 +18,7 @@ The resulting table is also exported to a csv, and made available locally (outsi
 * Make sure the Docker Desktop has set the Memory limit to at least 16 GB. Even just the subset of clinical trials that are currently recruiting approaches 70k entries!
 ![alt text](https://github.com/kuanjuliu/clinical_trials_ai/blob/main/Docker%20Desktop%20Memory%20Requirements.png)
 * Clone the repo to your local machine
-* From the repo's root `app\` directory, build, create, and run the Docker container — as well as execute the Python scripts — by typing:
+* From the repo's root directory, build, create, and run the Docker container — as well as execute the Python scripts — by typing:
 ````
 docker compose up
 ````
