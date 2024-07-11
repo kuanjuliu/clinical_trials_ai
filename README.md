@@ -57,11 +57,11 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
   * Age, gender, and existing medical conditions, if mentioned explicitly in the eligibiilty criteria, must be filtered on/out depending on whether they are in the inclusion/exclusion criteria
 * The trained model will be used against the local database to quickly return clinical trials that fit patients in those three characteristics
 
-#### Installation
+#### Installation of OpenAI
 
 * TBD
 
-#### Aspirations
+## Aspirations
 
 * Gain a better understanding of which clinical trials are likely to be of interest to patients today, for example if we can ignore trials where the last status date was many years in the past
 * Assign more accurate data types to each column (not just VARCHAR) to assist in training OpenAI
