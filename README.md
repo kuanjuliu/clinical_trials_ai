@@ -61,7 +61,7 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
 
 * TBD
 
-## Aspirations
+### Aspirations
 
 * Gain a better understanding of which clinical trials are likely to be of interest to patients today, for example if we can ignore trials where the last status date was many years in the past
 * Assign more accurate data types to each column (not just VARCHAR) to assist in training OpenAI
