@@ -27,7 +27,7 @@ docker compose up
 ````
 docker ps
 ````
-In this case, the container's name is `clinical_trials_ai-ct-1`:
+* In this case, the container's name is `clinical_trials_ai-ct-1`:
 ````
 CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS          PORTS     NAMES
 81184729928f   clinical_trials_ai-ct   "python3 ClinicalTri…"   8 minutes ago   Up 48 seconds             clinical_trials_ai-ct-1
