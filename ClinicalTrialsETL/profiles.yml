@@ -3,3 +3,4 @@ clinical_trials:
   outputs:
     dev:
       type: duckdb
+      threads: 1

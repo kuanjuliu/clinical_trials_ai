@@ -130,5 +130,6 @@ WORKDIR /opt/app/ClinicalTrialsETL
 RUN pip3 install -r requirements.txt
 COPY ClinicalTrialsETL/ .
 
-CMD ["python3"]
+CMD ["python3", "-u", "ClinicalTrialsETL.py"]
+
 

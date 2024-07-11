@@ -23,7 +23,6 @@ url = "https://clinicaltrials.gov/api/v2/stats/field/sizes"
 url = "https://clinicaltrials.gov/api/v2/studies"               # Query API endpoints (full studies)
 url = "https://clinicaltrials.gov/api/v2/studies"               # Query API endpoints (selected study fields)
 
-
 # ------------------------------------------------------------------------------
 # Download from ClinicalTrials.gov using dlt's REST API Helpers
 # ------------------------------------------------------------------------------
@@ -57,14 +56,13 @@ def clinical_trials():
         s += page_size * sys.getsizeof(page)
         print ("Total Records Retrieved:", i * page_size,",", "{:.2f}".format(s / 1024**2), "Total MiB.")
         i += 1
-        # if i > 10:
-        #     break
 
 
 # Create dlt pipeline
 import duckdb
 
-# db = duckdb.connect()     # Needed only for in-memory DuckDB database
+# db = duckdb.connect("clinical_trials.duckdb", read_only=False)     # Needed only for in-memory DuckDB database
+# db.execute("SET memory_limit='8GB';")  # Resourcing for DuckDB needs to be understood vs where Docker's own memory limits are set
 pipeline = dlt.pipeline(
     # import_schema_path="schemas/import",
     # export_schema_path="schemas/export",
@@ -75,7 +73,7 @@ pipeline = dlt.pipeline(
 )
 
 load_info = pipeline.run(clinical_trials, write_disposition='replace')
-print (load_info)
+# print (load_info)
 
 # Log time
 current_time = time.time(); print ("Step Time:", "{:.2f}".format(current_time - prev_time), "secs. Total Time Elapsed:", "{:.2f}".format(prev_time - start_time), "secs."); prev_time = current_time
@@ -93,11 +91,13 @@ current_time = time.time(); print ("Step Time:", "{:.2f}".format(current_time - 
 # Parse out inclusion and exclusion criteria with DBT
 # ------------------------------------------------------------------------------
 
+print("Set up DBT model through DLT")
 dbt = dlt.dbt.package(pipeline,
                     "dbt_clinical_trials",
 )
 
 # Execute DBT models
+print ("Execute DBT model")
 models = dbt.run_all()
 
 # Save outcomes to db for monitoring
@@ -114,8 +114,13 @@ models = dbt.run_all()
 current_time = time.time(); print ("Step Time:", "{:.2f}".format(current_time - prev_time), "secs. Total Time Elapsed:", "{:.2f}".format(prev_time - start_time), "secs."); prev_time = current_time
 
 # # Load the duckdb and query it
-db_file = duckdb.connect(database='./clinical_trials.duckdb', read_only=False)
-db_file.sql("COPY (SELECT * FROM dbo.inclusion_exclusion_criteria) to 'inclusion_exclusion_criteria.csv' (HEADER, DELIMITER '`');")
-db_file.close()
+print ("Reconnecting to clinical_trials.duckdb ....")
+db = duckdb.connect(database='clinical_trials.duckdb', read_only=False)
+# print ("Setting DuckDB memory limits lower ....")
+# db.execute("SET memory_limit='8GB';")  # Resourcing for DuckDB needs to be understood vs where Docker's own memory limits are set
+print ("Exporting inclusion_exclusion_criteria ....")
+db.sql("COPY (SELECT * FROM dbo.inclusion_exclusion_criteria) to 'inclusion_exclusion_criteria.csv' (HEADER, DELIMITER '`');")
+print ("Closing DuckDB connection")
+db.close()
 # db_file.sql("SELECT * FROM temp.information_schema.tables").show(max_width = 1000, max_rows = 1000)
 # db_file.sql("SELECT * FROM dbo.inclusion_exclusion_criteria LIMIT 10").show(max_width = 300, max_rows = 1000)
