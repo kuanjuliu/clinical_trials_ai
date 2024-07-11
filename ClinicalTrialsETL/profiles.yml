@@ -1,0 +1,5 @@
+clinical_trials:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb

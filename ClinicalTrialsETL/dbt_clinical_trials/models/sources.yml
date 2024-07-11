@@ -1,0 +1,6 @@
+sources:
+  - name: clinical_trials
+    schema: dbo
+    database: clinical_trials
+    tables:
+    - name: clinical_trials

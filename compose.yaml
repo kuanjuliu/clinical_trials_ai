@@ -1,0 +1,4 @@
+services:
+  ct:
+    build: .
+    command: python3 ClinicalTrialsETL.py
