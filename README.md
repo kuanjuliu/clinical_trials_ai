@@ -23,11 +23,11 @@ The resulting table is also exported to a csv, and made available locally (outsi
 docker compose up
 ````
 * (Note that the data load and schema generation can take around 5 minutes to complete)
-* Copy out to your local `app/` folder the `inclusion_exclusion_criteria.csv` file by typing:
+* Copy out to the (local) repo's root folder the `inclusion_exclusion_criteria.csv` file by typing:
 ````
 docker cp ct:/opt/app/ClinicalTrialsETL/inclusion_exclusion_criteria.csv .
 ````
-* If desired, the entire clinical trials DuckDB database can also be pulled out of the Docker container for reuse by typing:
+* If desired, the entire clinical trials DuckDB database can also be pulled out of the Docker container for reuse locally by typing:
 ````
 docker cp ct:/opt/app/ClinicalTrialsETL/clinical_trials.duckdb .
 ````
