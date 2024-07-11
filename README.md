@@ -27,7 +27,7 @@ docker compose up
 ````
 docker cp ct:/opt/app/ClinicalTrialsETL/inclusion_exclusion_criteria.csv .
 ````
-* If desired, the entire clinical trials DuckDB database can also be pulled out of the Docker container for reuse locally by typing:
+* If desired, the raw clinical trials DLT -> DuckDB database can also be pulled out of the Docker container for reuse locally by typing:
 ````
 docker cp ct:/opt/app/ClinicalTrialsETL/clinical_trials.duckdb .
 ````
