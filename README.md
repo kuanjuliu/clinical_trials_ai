@@ -32,7 +32,11 @@ docker ps
 CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS          PORTS     NAMES
 81184729928f   clinical_trials_ai-ct   "python3 ClinicalTri…"   8 minutes ago   Up 48 seconds             clinical_trials_ai-ct-1
 ````
-* Using the container name you found above, you can copy the `inclusion_exclusion_criteria.csv` file inside the container out to your (local) repo's root folder by typing:
+* Restart the container you found above if necessary:
+````
+docker restart clinical_trials_ai-ct-1
+````
+* You can now copy the `inclusion_exclusion_criteria.csv` file out to your (local) repo's root folder by typing:
 ````
 docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/inclusion_exclusion_criteria.csv .
 ````
