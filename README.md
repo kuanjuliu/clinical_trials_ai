@@ -23,13 +23,19 @@ The resulting table is also exported to a csv, and made available locally (outsi
 docker compose up
 ````
 * (Note that the data load and schema generation can take around 5 minutes to complete)
-* Copy out to the (local) repo's root folder the `inclusion_exclusion_criteria.csv` file by typing:
+* Find out the name of the live container (`clinical_trials_ai-ct-1` in this case):
 ````
-docker cp ct:/opt/app/ClinicalTrialsETL/inclusion_exclusion_criteria.csv .
+docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS          PORTS     NAMES
+81184729928f   clinical_trials_ai-ct   "python3 ClinicalTri…"   8 minutes ago   Up 48 seconds             clinical_trials_ai-ct-1
+````
+* Using the container name you found above, copy out to the (local) repo's root folder the `inclusion_exclusion_criteria.csv` file by typing:
+````
+docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/inclusion_exclusion_criteria.csv .
 ````
 * If desired, the raw clinical trials DLT -> DuckDB database can also be pulled out of the Docker container for reuse locally by typing:
 ````
-docker cp ct:/opt/app/ClinicalTrialsETL/clinical_trials.duckdb .
+docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duckdb .
 ````
 
 ### Training OpenAI to Search for Eligible Clinical Trials
