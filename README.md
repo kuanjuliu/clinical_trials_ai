@@ -60,3 +60,12 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
 #### Installation
 
 * TBD
+
+#### Aspirations
+
+* Gain a better understanding of which clinical trials are likely to be of interest to patients today, for example if we can ignore trials where the last status date was many years in the past
+* Assign more accurate data types to each column (not just VARCHAR) to assist in training OpenAI
+* Speed
+  * The ClinicalTrials.gov database and its DBT transformation should be executed once for all clients and the resulting database mounted as an external source (say, on GCP) in whichever Docker container needs it. This would eliminate 99% of the time this project takes to execute, along with some of the runtime memory pressures.
+  * Modularize the running of DBT, perhaps into its own container, so as to better tailor its performance needs independently
+* Continuously train OpenAI on an increasingly granular set of patient characteristics to improve relevance of search results and speed of returning them. After all the set of clinical trials is finite and changes only very slowly
