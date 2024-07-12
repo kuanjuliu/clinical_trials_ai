@@ -52,11 +52,28 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
   * Age
   * Gender
   * Existing Medical Conditions
-* What's being explored here is an OpenAI API version of ChatGPT's ability to evaluate eligibility given one patient and one clinical trial's inclusion/exclusion criteria.
-  * Given the tiny set of patient characteristics, the accuracy can be summarized as "Eligible but with provisos"
-  * Curiously even for this "mock ChatGPT" experience I am consistently not able to get the results from OpenAI API as I can in ChatGTP
+* What's being explored first here is using OpenAI API to mimic ChatGPT's ability to evaluate eligibility of one prospective participant and one clinical trial.
+  * The quality of the responses at this point are behind even ChatGPT 3.5. This needs to be improved
+  * Here's an example of an accurate conclusion:
+````
+----------------------------------------------------------------------------------------------------------------------------------------------------
+• NCT ID: NCT04323774
+• URL: https://clinicaltrials.gov/study/NCT04323774
+Ineligible
+The prospective participant is 49 years old, which is above the maximum age limit of 24 for this trial. Therefore, they do not meet the inclusion criteria and are ineligible for the trial. 
+````
+  * And here's an example where it's not (the prospective participant is a 49 year-old male with no history of cancer):
+````
+• NCT ID: NCT04049474
+• URL: https://clinicaltrials.gov/study/NCT04049474
+Eligible
+The prospective participant is a 49-year-old male, within the age range of 22 to 80 years, and meets the following inclusion criteria:
+- Peripheral lung tumor on pre-procedure chest CT scan, which is known or suspected to be advanced, inoperable non-small cell lung cancer (stages IIIA/B/C and IVA/B) based on the 8th edition TNM staging guidelines.
+- Pre-procedure chest CT scan with the presence of a bronchus or airway path leading directly to the peripheral lung tumor (also known as a "bronchus sign").
+````
   * Moreover, GPT-4o can ingest entire csvs of clinical trials and their inclusion/exclusion criteria and return ALL trials that a given patient is eligible for. GPT-3.5 cannot do this at all.
-  * Additionally, GPT-4o is clearly superior to the GPT-3.5 Turbo Instruct used in this API implementation especially in terms of staying focused when interpreting generic ("no history of cancer") patient conditions against the criteria
+  * Additionally, GPT-4o is clearly superior GPT-3.5 in ChatGPT form, never mind the GPT-3.5 Turbo Instruct used in this API implementation
+  * This is especially true in terms of staying focused when interpreting generic ("no history of cancer") patient conditions against the criteria
 * Clearly some fine-tuning needs to be done to improve OpenAI's ability to better approximate the superior ChatGPT-4o experience
 
 
