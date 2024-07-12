@@ -52,10 +52,13 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
   * Age
   * Gender
   * Existing Medical Conditions
-* Input-Output pairs will be generated to train OpenAI in the meaning of the inclusion/exclusion criteria, namely:
-  * Age, gender, and existing medical conditions, if not mentioned explicitly in the eligibility criteria, can be ignored as search parameters
-  * Age, gender, and existing medical conditions, if mentioned explicitly in the eligibiilty criteria, must be filtered on/out depending on whether they are in the inclusion/exclusion criteria
-* The trained model will be used against the local database to quickly return clinical trials that fit patients in those three characteristics
+* What's being explored here is an OpenAI API version of ChatGPT's ability to evaluate eligibility given one patient and one clinical trial's inclusion/exclusion criteria.
+  * Given the tiny set of patient characteristics, the accuracy can be summarized as "Eligible but with provisos"
+  * Curiously even for this "mock ChatGPT" experience I am consistently not able to get the results from OpenAI API as I can in ChatGTP
+  * Moreover, GPT-4o can ingest entire csvs of clinical trials and their inclusion/exclusion criteria and return ALL trials that a given patient is eligible for. GPT-3.5 cannot do this at all.
+  * Additionally, GPT-4o is clearly superior to the GPT-3.5 Turbo Instruct used in this API implementation especially in terms of staying focused when interpreting generic ("no history of cancer") patient conditions against the criteria
+* Clearly some fine-tuning needs to be done to improve OpenAI's ability to better approximate the superior ChatGPT-4o experience
+
 
 #### Installation of OpenAI
 
