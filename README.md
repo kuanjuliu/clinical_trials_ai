@@ -55,7 +55,7 @@ docker cp clinical_trials_ai-ct-1:/opt/app/ClinicalTrialsETL/clinical_trials.duc
   * Gender
   * Existing Medical Conditions
 * What's being explored first here is using OpenAI API to mimic ChatGPT's ability to evaluate eligibility of one prospective participant and one clinical trial.
-  * The quality of the responses at this point are behind even ChatGPT 3.5. This needs to be improved
+  * As of this writing, the quality of the responses are still behind ChatGPT 3.5. This needs fine-tuning at the very least.
   * Here's an example of an accurate conclusion:
 ````
 ----------------------------------------------------------------------------------------------------------------------------------------------------
