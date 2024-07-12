@@ -27,7 +27,7 @@ docker compose up
 * (Note that the data load and schema generation can take around 5 minutes to complete)
 * Find out the name of the live container:
 ````
-docker ps
+docker ps -a
 ````
 * In this case, the container's name is `clinical_trials_ai-ct-1`:
 ````
