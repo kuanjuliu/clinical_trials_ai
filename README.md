@@ -10,7 +10,9 @@ It then employs a [dlt](https://dlthub.com) pipeline to auto-generate a schema f
 
 Finally, [dbt](http://getdbt.com) is engaged to transform the inclusion/exclusion criteria into the same DuckDB database.
 
-The resulting table is also exported to a csv, and made available locally (outside the Docker container).
+The resulting table is also exported to a csv, and can be made available locally outside the Docker container (see instructions below).
+
+That table is then used for OpenAI to evaluate participant eligibility for trials.
 
 ### Installation
 
