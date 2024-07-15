@@ -48,6 +48,7 @@ openai==1.35.13
 ordered-set==4.1.0
 orjson==3.10.6
 packaging==24.1
+pandas==2.2.2
 parsedatetime==2.6
 pathspec==0.12.1
 pathvalidate==3.2.0
