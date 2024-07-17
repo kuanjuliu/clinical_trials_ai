@@ -106,7 +106,7 @@ def check_eligibility_with_openai(person, criteria):
 
 # Test person
 person = {
-    "age": 49,™™
+    "age": 49,
     "gender": "male",
     "conditions": ["no history of cancer"]
 }
