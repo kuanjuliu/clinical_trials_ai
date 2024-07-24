@@ -1,6 +1,5 @@
 # clinical_trials_etl.py
 
-import time
 from clinical_trials_api import ClinicalTrialsEndpoints, setup_data_pipeline, fetch_clinical_trials
 from data_transforms import run_dbt_models
 from data_export import export_criteria
