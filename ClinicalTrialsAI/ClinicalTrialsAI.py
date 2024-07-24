@@ -88,21 +88,42 @@ def construct_prompt(person, criteria):
 from openai import OpenAI
 client = OpenAI()
 
-def check_eligibility_with_openai(person, criteria):
+def check_eligibility_with_openai(person, criteria, model = 'gpt-3.5-turbo', temperature = 0.2):
     prompt = construct_prompt(person, criteria)
-    response = client.completions.create(
+    # response = client.completions.create(
+    #     # model='gpt-4o-2024-05-13',
+    #     # model='gpt-4-turbo',
+    #     model='gpt-4o-mini',
+    #     # model='gpt-3.5-turbo',
+    #     # model='gpt-3.5-turbo-0125',
+    #     # model='gpt-3.5-turbo-instruct',
+    #     # model='text-davinci-003',
+    #     prompt=prompt,
+    #     max_tokens=400,
+    #     n=10,
+    #     stop="</s>",
+    #     temperature=0.7,
+    # )
+    response = client.chat.completions.create(
+        model=model,
         # model='gpt-4o-2024-05-13',
         # model='gpt-4-turbo',
+        # model='gpt-4o-mini',
+        # model='gpt-3.5-turbo',
         # model='gpt-3.5-turbo-0125',
-        model='gpt-3.5-turbo-instruct',
+        # model='gpt-3.5-turbo-instruct',
         # model='text-davinci-003',
-        prompt=prompt,
-        max_tokens=400,
-        n=10,
-        stop="</s>",
-        temperature=0.7,
+        temperature=temperature,
+        messages=[
+            # {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt},
+            # {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+            # {"role": "user", "content": "Where was it played?"}
+        ]
     )
-    return response.choices[0].text
+
+    # return response.choices[0].text
+    return response.choices[0].message.content
 
 # Test person
 person = {
@@ -112,17 +133,17 @@ person = {
 }
 
 
-
 # Check eligibility for a few trials
 print("----------------------------------------------------------------------------------------------------------------------------------------------------")
 for criteria in criteria_list[0:10]:
-    result = check_eligibility_with_openai(person, criteria)
+    result = check_eligibility_with_openai(person, criteria, 'gpt-4o-mini', 0.7)
+    # result = check_eligibility_with_openai(person, criteria, 'gpt-3.5-turbo', 0.2)
     print("• NCT ID: " + criteria['nct_id'])
     print("• URL: " + criteria['URL'])
     print(result)
     print("----------------------------------------------------------------------------------------------------------------------------------------------------")
 
-# print(construct_prompt(person, criteria))
+# print(construct_prompt(person, criteria))]
 #
 # # Fine tune through better prompts
 # response = client.completions.create(
