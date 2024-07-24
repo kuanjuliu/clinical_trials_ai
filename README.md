@@ -82,7 +82,7 @@ The prospective participant is a 49-year-old male, within the age range of 22 to
 #### Installation of OpenAI
 
 * Copy `inclusion_exclusion_criteria.csv` from `ClinicalTrialsETL/` to `ClinicalTrialsAI/`
-* Run `ClinicalTrialsAI/ClinicalTrialsAI.py`
+* Run `python -m ClinicalTrialsAI/clinical_trials_ai`
 
 ### Aspirations
 
