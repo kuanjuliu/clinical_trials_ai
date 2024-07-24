@@ -2,11 +2,22 @@ import openai
 import os
 
 def setup_openai_api():
+    """
+    Set up the OpenAI API key from the environment variable.
+    """
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Construct the ChatGBPT-style prompt
 def construct_prompt(participant, criteria):
+    """
+    Construct a ChatGPT-style prompt for evaluating clinical trial eligibility.
 
+    Args:
+    participant (object): An object containing participant information (age, gender, conditions).
+    criteria (dict): A dictionary containing clinical trial criteria.
+
+    Returns:
+    str: A formatted prompt string for the OpenAI API.
+    """
     prompt = "I am evaluating potential participants for the below clinical trial."
     prompt += "\n\n"
     prompt += f"Could you please assess if a {participant.age}-year-old {participant.gender} with {', '.join(participant.conditions)} meets the inclusion criteria and does not match any exclusion criteria for the following clinical trial?"
@@ -18,12 +29,9 @@ def construct_prompt(participant, criteria):
     prompt += "\n\n"
     prompt += "Please format your response in this manner:\n"
     prompt += "\n\n"
-    # prompt += "• NCT ID\n"
-    # prompt += "• URL\n"
     prompt += "• Whether the prospective participant is eligible, provisionally eligible, or ineligible for the trial\n"
     prompt += "• Explain how you determined eligibility\n"
     prompt += "\n\n"
-    # for criteria in criteria_list:
     prompt += "NCT ID: " + criteria['nct_id'] + "\n"
     prompt += "URL: " + criteria['URL'] + "\n\n"
     prompt += "Minimum Age " + criteria['minimum_age'] + "\n\n"
@@ -34,32 +42,44 @@ def construct_prompt(participant, criteria):
 
     return prompt
 
-# Gain a response for the prompted question from OpenAI's API
-def check_eligibility_with_openai(client, participant, criteria, model = 'gpt-4o-mini', temperature = 0.2):
+def check_eligibility_with_openai(client, participant, criteria, model='gpt-4o-mini', temperature=0.2):
+    """
+    Check eligibility for a clinical trial using OpenAI's API.
+
+    Args:
+    client (openai.OpenAI): An instance of the OpenAI client.
+    participant (object): An object containing participant information.
+    criteria (dict): A dictionary containing clinical trial criteria.
+    model (str): The OpenAI model to use (default: 'gpt-4o-mini').
+    temperature (float): The temperature setting for the API call (default: 0.2).
+
+    Returns:
+    str: The content of the API response.
+    """
     prompt = construct_prompt(participant, criteria)
     response = client.chat.completions.create(
         model=model,
-        # model='gpt-4o-2024-05-13',
-        # model='gpt-4-turbo',
-        # model='gpt-4o-mini',
-        # model='gpt-3.5-turbo',
-        # model='gpt-3.5-turbo-0125',
-        # model='gpt-3.5-turbo-instruct',
-        # model='text-davinci-003',
         temperature=temperature,
         messages=[
-            # {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt},
-            # {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-            # {"role": "user", "content": "Where was it played?"}
         ]
     )
 
-    # return response.choices[0].text
     return response.choices[0].message.content
 
-def check_multiple_eligibility_with_openai(participant, criteria_list, model = 'gpt-4o-mini', temperature = 0.2):
-    # Check eligibility for a few trials
+def check_multiple_eligibility_with_openai(participant, criteria_list, model='gpt-4o-mini', temperature=0.2):
+    """
+    Check eligibility for one participant over multiple clinical trials using OpenAI's API.
+
+    Args:
+    participant (object): An object containing participant information.
+    criteria_list (list): A list of dictionaries, each containing criteria for a clinical trial.
+    model (str): The OpenAI model to use (default: 'gpt-4o-mini').
+    temperature (float): The temperature setting for the API call (default: 0.2).
+
+    Prints:
+    The eligibility results for each trial.
+    """
     client = openai.OpenAI()
     print("----------------------------------------------------------------------------------------------------------------------------------------------------")
     for criteria in criteria_list[0:10]:

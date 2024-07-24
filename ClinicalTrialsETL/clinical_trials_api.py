@@ -18,6 +18,12 @@ class ClinicalTrialsEndpoints:
 
 
 def setup_clinical_trials_client():
+    """
+    Set up and return a RESTClient for the ClinicalTrials.gov API.
+
+    Returns:
+        RESTClient: Configured client for making API requests.
+    """
     return RESTClient(
         base_url=ClinicalTrialsEndpoints.BASE_URL,
         paginator=JSONResponseCursorPaginator(
@@ -28,6 +34,12 @@ def setup_clinical_trials_client():
 
 
 def setup_data_pipeline():
+    """
+    Set up and return a DLT data pipeline for clinical trials data.
+
+    Returns:
+        dlt.Pipeline: Configured pipeline for processing clinical trials data.
+    """
     return dlt.pipeline(
         pipeline_name="clinical_trials",
         destination="duckdb",
@@ -35,8 +47,26 @@ def setup_data_pipeline():
     )
 
 def fetch_clinical_trials(pipeline):
+    """
+    Fetch clinical trials data and process it through the given pipeline.
+
+    Args:
+        pipeline (dlt.Pipeline): The pipeline to process the data.
+
+    Returns:
+        dlt.pipeline.RunResult: The result of running the pipeline.
+    """
     @dlt.resource
     def clinical_trials(page_size=1000):
+        """
+        Generator function to fetch clinical trials data page by page.
+
+        Args:
+            page_size (int): Number of records per page. Defaults to 1000.
+
+        Yields:
+            dict: A page of clinical trials data.
+        """
         client = setup_clinical_trials_client()
         record_count = 0
         total_size = 0

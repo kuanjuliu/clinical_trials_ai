@@ -1,6 +1,19 @@
 import dlt
 
 def run_dbt_models(pipeline):
+    """
+    Run DBT models using the provided pipeline.
+
+    This function sets up and executes DBT models through DLT (Data Loading Tool).
+    It prints the progress and can optionally print detailed execution information
+    for each model.
+
+    Args:
+        pipeline: The DLT pipeline object to use for running DBT models.
+
+    Returns:
+        None
+    """
     print("Set up DBT model through DLT")
     dbt = dlt.dbt.package(pipeline, "dbt_clinical_trials")
 
